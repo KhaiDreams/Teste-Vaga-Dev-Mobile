@@ -1,0 +1,7 @@
+{
+  "name": "AvaliacaoVeicular",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

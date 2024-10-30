@@ -1,1 +1,17 @@
-node_modules
+# Node modules
+node_modules/
+# Angular and Ionic specific folders
+.angular/
+.idea/
+.vscode/
+# Compiled files
+dist/
+# Capacitor builds
+android/
+ios/
+# Environment settings
+*.env
+*.env.*
+# IDE and system files
+.DS_Store
+Thumbs.db
