@@ -9,6 +9,7 @@ dist/
 # Capacitor builds
 android/
 ios/
+www/
 # Environment settings
 *.env
 *.env.*

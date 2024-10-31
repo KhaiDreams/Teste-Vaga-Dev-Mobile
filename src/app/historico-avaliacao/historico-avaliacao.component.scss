@@ -1,0 +1,22 @@
+.historico-content {
+    padding: 16px; /* Adiciona um padding ao conteúdo */
+  }
+  
+  .avaliacao-item {
+    margin-bottom: 12px; /* Espaço entre os itens do histórico */
+    border-radius: 8px; /* Cantos arredondados */
+    background-color: #f9f9f9; /* Cor de fundo dos itens */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
+  }
+  
+  .avaliacao-item ion-label h2 {
+    font-size: 1.2em; /* Tamanho da fonte do título */
+    margin: 0; /* Remove margem do título */
+  }
+  
+  .avaliacao-item ion-label p {
+    margin: 0; /* Remove margem das descrições */
+    font-size: 0.9em; /* Tamanho da fonte das descrições */
+    color: #666; /* Cor das descrições */
+  }
+  

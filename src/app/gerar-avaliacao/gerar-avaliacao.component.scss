@@ -1,0 +1,25 @@
+.gerar-content {
+    padding: 16px; /* Adiciona padding ao conteúdo */
+  }
+  
+  ion-item {
+    margin-bottom: 16px; /* Espaço entre os itens do formulário */
+    border-radius: 8px; /* Cantos arredondados */
+    background-color: #f9f9f9; /* Cor de fundo dos itens */
+  }
+  
+  .submit-button {
+    margin-top: 20px; /* Espaço acima do botão de submit */
+    background-color: #3880ff; /* Cor do botão */
+    color: white; /* Cor do texto do botão */
+    font-weight: bold; /* Negrito no texto do botão */
+  }
+  
+  ion-label {
+    font-weight: bold; /* Negrito para os rótulos */
+  }
+  
+  ion-input, ion-datetime {
+    --padding-start: 10px; /* Adiciona um pouco de padding aos inputs */
+  }
+  

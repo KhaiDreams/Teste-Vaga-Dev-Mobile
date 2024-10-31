@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gerar Avaliação</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="salvarAvaliacao()">
+    <ion-item>
+      <ion-label>Placa</ion-label>
+      <ion-input [(ngModel)]="avaliacao.placa" name="placa" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Chassi</ion-label>
+      <ion-input [(ngModel)]="avaliacao.chassi" name="chassi" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Marca/Modelo</ion-label>
+      <ion-input [(ngModel)]="avaliacao.marcaModelo" name="marcaModelo" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Hodômetro</ion-label>
+      <ion-input type="number" [(ngModel)]="avaliacao.hodometro" name="hodometro" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Motor</ion-label>
+      <ion-input [(ngModel)]="avaliacao.motor" name="motor" required></ion-input>
+    </ion-item>
+
+    <!-- Botões para tirar foto e selecionar vídeo -->
+    <ion-button (click)="tirarFoto()">Tirar Foto</ion-button>
+    <ion-button (click)="escolherDaGaleria()">Escolher da Galeria</ion-button>
+
+    <ion-item>
+      <ion-label>Selecionar Vídeo</ion-label>
+      <input type="file" accept="video/*" (change)="escolherVideo($event)" />
+    </ion-item>
+
+    <ion-button type="submit">Salvar Avaliação</ion-button>
+  </form>
+</ion-content>
