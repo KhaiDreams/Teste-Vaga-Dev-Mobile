@@ -6,7 +6,7 @@
 
 <ion-content class="historico-content">
   <ion-list>
-    <ion-item *ngFor="let avaliacao of avaliacoes" (click)="visualizarAvaliacao(avaliacao)" class="avaliacao-item">
+    <ion-item *ngFor="let avaliacao of avaliacoes; let i = index" (click)="visualizarAvaliacao(avaliacao, i)" class="avaliacao-item">
       <ion-label>
         <h2>{{ avaliacao.marcaModelo }}</h2>
         <p>Placa: {{ avaliacao.placa }}</p>

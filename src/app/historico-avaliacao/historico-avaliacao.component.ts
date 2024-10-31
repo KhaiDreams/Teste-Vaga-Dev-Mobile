@@ -19,18 +19,19 @@ export class HistoricoAvaliacaoComponent {
     this.avaliacoes = this.avaliacaoService.listarAvaliacoes();
   }
 
-  visualizarAvaliacao(avaliacao: Avaliacao) {
+  visualizarAvaliacao(avaliacao: Avaliacao, index: number) {
     this.router.navigate(['/gerar-avaliacao'], {
       queryParams: {
+        index: index,
         placa: avaliacao.placa,
         chassi: avaliacao.chassi,
         marcaModelo: avaliacao.marcaModelo,
         hodometro: avaliacao.hodometro,
         motor: avaliacao.motor,
         dataRegistro: avaliacao.dataRegistro,
-        fotos: avaliacao.fotos,
-        video: avaliacao.video
-      }
+        fotos: JSON.stringify(avaliacao.fotos),
+        video: avaliacao.video,
+      },
     });
   }
 }

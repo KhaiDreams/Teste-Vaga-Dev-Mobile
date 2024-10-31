@@ -3,6 +3,7 @@ import { AvaliacaoService } from '../avaliacao.service';
 import { Avaliacao } from '../avaliacao.model';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-gerar-avaliacao',
@@ -21,10 +22,25 @@ export class GerarAvaliacaoComponent {
     dataRegistro: new Date(),
   };
 
+  private isEditMode: boolean = false; // Flag para modo de edição
+  private avaliacaoIndex: number | null = null; // Armazenar o índice da avaliação a ser editada
+
   constructor(
     private avaliacaoService: AvaliacaoService,
-    private toastController: ToastController
-  ) {}
+    private toastController: ToastController,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(params => {
+      if (params && params['index']) {
+        this.isEditMode = true; // Estamos no modo de edição
+        this.avaliacaoIndex = Number(params['index']); // Captura o índice da avaliação
+        const avaliacao = this.avaliacaoService.obterAvaliacao(this.avaliacaoIndex);
+        if (avaliacao) {
+          this.avaliacao = { ...avaliacao }; // Carregar a avaliação no formulário
+        }
+      }
+    });
+  }
 
   async tirarFoto() {
     const image = await Camera.getPhoto({
@@ -60,8 +76,7 @@ export class GerarAvaliacaoComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      // Armazena o vídeo na avaliação
-      this.avaliacao.video = URL.createObjectURL(file); 
+      this.avaliacao.video = URL.createObjectURL(file);
       this.showToast('Vídeo selecionado com sucesso!');
     } else {
       this.showToast('Erro ao selecionar o vídeo.');
@@ -69,8 +84,27 @@ export class GerarAvaliacaoComponent {
   }
 
   salvarAvaliacao() {
+    if (!this.avaliacao.placa || !this.avaliacao.chassi || !this.avaliacao.marcaModelo || !this.avaliacao.hodometro || !this.avaliacao.motor) {
+      this.showToast('Todos os campos são obrigatórios!');
+      return;
+    }
+
     this.avaliacao.dataRegistro = new Date();
-    this.avaliacaoService.adicionarAvaliacao(this.avaliacao);
+    
+    if (this.isEditMode && this.avaliacaoIndex !== null) {
+      // Editando a avaliação
+      this.avaliacaoService.editarAvaliacao(this.avaliacaoIndex, this.avaliacao);
+      this.showToast('Avaliação editada com sucesso!');
+    } else {
+      // Adicionando nova avaliação
+      this.avaliacaoService.adicionarAvaliacao(this.avaliacao);
+      this.showToast('Avaliação salva com sucesso!');
+    }
+
+    this.resetarFormulario(); // Resetando o formulário após salvar
+  }
+
+  private resetarFormulario() {
     this.avaliacao = {
       placa: '',
       chassi: '',
@@ -81,7 +115,7 @@ export class GerarAvaliacaoComponent {
       video: '',
       dataRegistro: new Date(),
     };
-    this.showToast('Avaliação salva com sucesso!');
+    this.avaliacaoIndex = null; // Resetando o índice
   }
 
   private async showToast(message: string) {

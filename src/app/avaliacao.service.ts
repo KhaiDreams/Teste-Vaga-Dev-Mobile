@@ -20,4 +20,11 @@ export class AvaliacaoService {
   obterAvaliacao(index: number): Avaliacao | undefined {
     return this.avaliacoes[index];
   }
+
+  editarAvaliacao(index: number, avaliacao: Avaliacao) {
+    const existingAvaliacao = this.avaliacoes[index];
+    if (existingAvaliacao) {
+      this.avaliacoes[index] = { ...existingAvaliacao, ...avaliacao };
+    }
+  }  
 }
