@@ -84,8 +84,8 @@ export class GerarAvaliacaoComponent {
   }
 
   salvarAvaliacao() {
-    if (!this.avaliacao.placa || !this.avaliacao.chassi || !this.avaliacao.marcaModelo || !this.avaliacao.hodometro || !this.avaliacao.motor) {
-      this.showToast('Todos os campos são obrigatórios!');
+    if (!this.avaliacao.placa || !this.avaliacao.chassi || !this.avaliacao.marcaModelo || !this.avaliacao.hodometro || !this.avaliacao.motor || this.avaliacao.fotos.length === 0) {
+      this.showToast('Todos os campos e pelo menos uma foto são obrigatórios!');
       return;
     }
 

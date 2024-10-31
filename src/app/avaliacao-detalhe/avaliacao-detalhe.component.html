@@ -1,45 +1,44 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title>Detalhes da Avaliação</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="dismiss()">Fechar</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-    <ion-list>
-      <ion-item>
-        <ion-label><strong>Placa:</strong> {{ avaliacao.placa }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label><strong>Chassi:</strong> {{ avaliacao.chassi }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label><strong>Marca/Modelo:</strong> {{ avaliacao.marcaModelo }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label><strong>Hodômetro:</strong> {{ avaliacao.hodometro }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label><strong>Motor:</strong> {{ avaliacao.motor }}</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label><strong>Data de Registro:</strong> {{ avaliacao.dataRegistro | date:'dd/MM/yyyy' }}</ion-label>
-      </ion-item>
-      <ion-item *ngIf="avaliacao.fotos.length > 0">
-        <ion-label><strong>Fotos:</strong></ion-label>
-        <div *ngFor="let foto of avaliacao.fotos">
-          <img [src]="foto" style="width: 100%; height: auto;">
-        </div>
-      </ion-item>
-      <ion-item *ngIf="avaliacao.video">
-        <ion-label><strong>Vídeo:</strong></ion-label>
-        <video controls>
-          <source [src]="avaliacao.video" type="video/mp4">
-          Seu navegador não suporta o elemento de vídeo.
-        </video>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-  
+  <ion-toolbar>
+    <ion-title>Detalhes da Avaliação</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Fechar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label><strong>Placa:</strong> {{ avaliacao.placa }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label><strong>Chassi:</strong> {{ avaliacao.chassi }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label><strong>Marca/Modelo:</strong> {{ avaliacao.marcaModelo }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label><strong>Hodômetro:</strong> {{ avaliacao.hodometro }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label><strong>Motor:</strong> {{ avaliacao.motor }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label><strong>Data de Registro:</strong> {{ avaliacao.dataRegistro | date:'dd/MM/yyyy' }}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="avaliacao.fotos.length > 0">
+      <ion-label><strong>Fotos:</strong></ion-label>
+      <div *ngFor="let foto of avaliacao.fotos" style="display: flex; justify-content: center; margin: 5px 0;">
+        <img [src]="foto" style="max-width: 100%; height: auto; object-fit: contain;">
+      </div>
+    </ion-item>
+    <ion-item *ngIf="avaliacao.video">
+      <ion-label><strong>Vídeo:</strong></ion-label>
+      <video controls style="width: 100%; height: auto;">
+        <source [src]="avaliacao.video" type="video/mp4">
+        Seu navegador não suporta o elemento de vídeo.
+      </video>
+    </ion-item>
+  </ion-list>
+</ion-content>
