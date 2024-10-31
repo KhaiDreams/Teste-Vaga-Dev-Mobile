@@ -28,31 +28,50 @@
     </ion-item>
 
     <!-- Botões para tirar foto e selecionar vídeo -->
-    <ion-button (click)="tirarFoto()">Tirar Foto</ion-button>
-    <ion-button (click)="escolherDaGaleria()">Escolher da Galeria</ion-button>
-
     <ion-item>
-      <ion-label>Selecionar Vídeo</ion-label>
-      <input type="file" accept="video/*" (change)="escolherVideo($event)" />
+      <ion-label>Imagem da Placa</ion-label>
+      <ion-button (click)="tirarFoto('placa')">Tirar Foto</ion-button>
+      <ion-button (click)="escolherDaGaleria('placa')">Escolher da Galeria</ion-button>
+    </ion-item>
+    <ion-item *ngIf="avaliacao.imagemPlaca">
+      <img [src]="'data:image/jpeg;base64,' + avaliacao.imagemPlaca" style="max-width: 100%; height: auto; object-fit: contain;">
     </ion-item>
 
-    <ion-button type="submit">Salvar Avaliação</ion-button>
+    <ion-item>
+      <ion-label>Imagem do Chassi</ion-label>
+      <ion-button (click)="tirarFoto('chassi')">Tirar Foto</ion-button>
+      <ion-button (click)="escolherDaGaleria('chassi')">Escolher da Galeria</ion-button>
+    </ion-item>
+    <ion-item *ngIf="avaliacao.imagemChassi">
+      <img [src]="'data:image/jpeg;base64,' + avaliacao.imagemChassi" style="max-width: 100%; height: auto; object-fit: contain;">
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Imagem do Hodômetro</ion-label>
+      <ion-button (click)="tirarFoto('hodometro')">Tirar Foto</ion-button>
+      <ion-button (click)="escolherDaGaleria('hodometro')">Escolher da Galeria</ion-button>
+    </ion-item>
+    <ion-item *ngIf="avaliacao.imagemHodometro">
+      <img [src]="'data:image/jpeg;base64,' + avaliacao.imagemHodometro" style="max-width: 100%; height: auto; object-fit: contain;">
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Imagem do Motor</ion-label>
+      <ion-button (click)="tirarFoto('motor')">Tirar Foto</ion-button>
+      <ion-button (click)="escolherDaGaleria('motor')">Escolher da Galeria</ion-button>
+    </ion-item>
+    <ion-item *ngIf="avaliacao.imagemMotor">
+      <img [src]="'data:image/jpeg;base64,' + avaliacao.imagemMotor" style="max-width: 100%; height: auto; object-fit: contain;">
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Vídeo</ion-label>
+      <input type="file" accept="video/*" (change)="escolherVideo($event)" />
+    </ion-item>
+    <ion-item *ngIf="avaliacao.video">
+      <video [src]="avaliacao.video" controls style="max-width: 100%; height: auto;"></video>
+    </ion-item>
+
+    <ion-button expand="full" type="submit">Salvar Avaliação</ion-button>
   </form>
-
-  <!-- Mostrar fotos -->
-  <ion-item *ngIf="avaliacao.fotos.length > 0">
-    <ion-label><strong>Fotos:</strong></ion-label>
-    <div *ngFor="let foto of avaliacao.fotos" style="display: flex; justify-content: center; margin: 5px 0;">
-      <img [src]="'data:image/jpeg;base64,' + foto" style="max-width: 100%; height: auto; object-fit: contain;">
-    </div>
-  </ion-item>
-
-  <!-- Mostrar vídeo -->
-  <ion-item *ngIf="avaliacao.video">
-    <ion-label><strong>Vídeo:</strong></ion-label>
-    <video controls style="width: 100%; height: auto;">
-      <source [src]="avaliacao.video" type="video/mp4">
-      Seu navegador não suporta o elemento de vídeo.
-    </video>
-  </ion-item>
 </ion-content>

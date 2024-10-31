@@ -20,10 +20,14 @@ export class GerarAvaliacaoComponent {
     fotos: [],
     video: '',
     dataRegistro: new Date(),
+    imagemPlaca: '',
+    imagemChassi: '',
+    imagemHodometro: '',
+    imagemMotor: '',
   };
 
-  private isEditMode: boolean = false; // Flag para modo de edição
-  private avaliacaoIndex: number | null = null; // Armazenar o índice da avaliação a ser editada
+  private isEditMode: boolean = false;
+  private avaliacaoIndex: number | null = null;
 
   constructor(
     private avaliacaoService: AvaliacaoService,
@@ -32,17 +36,17 @@ export class GerarAvaliacaoComponent {
   ) {
     this.route.queryParams.subscribe(params => {
       if (params && params['index']) {
-        this.isEditMode = true; // Estamos no modo de edição
-        this.avaliacaoIndex = Number(params['index']); // Captura o índice da avaliação
+        this.isEditMode = true;
+        this.avaliacaoIndex = Number(params['index']);
         const avaliacao = this.avaliacaoService.obterAvaliacao(this.avaliacaoIndex);
         if (avaliacao) {
-          this.avaliacao = { ...avaliacao }; // Carregar a avaliação no formulário
+          this.avaliacao = { ...avaliacao };
         }
       }
     });
   }
 
-  async tirarFoto() {
+  async tirarFoto(tipo: string) {
     const image = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
       source: CameraSource.Camera,
@@ -50,14 +54,22 @@ export class GerarAvaliacaoComponent {
     });
 
     if (image.base64String) {
-      this.avaliacao.fotos.push(image.base64String);
+      if (tipo === 'placa') {
+        this.avaliacao.imagemPlaca = image.base64String;
+      } else if (tipo === 'chassi') {
+        this.avaliacao.imagemChassi = image.base64String;
+      } else if (tipo === 'hodometro') {
+        this.avaliacao.imagemHodometro = image.base64String;
+      } else if (tipo === 'motor') {
+        this.avaliacao.imagemMotor = image.base64String;
+      }
       this.showToast('Foto tirada com sucesso!');
     } else {
       this.showToast('Erro ao tirar a foto.');
     }
   }
 
-  async escolherDaGaleria() {
+  async escolherDaGaleria(tipo: string) {
     const image = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
       source: CameraSource.Photos,
@@ -65,7 +77,15 @@ export class GerarAvaliacaoComponent {
     });
 
     if (image.base64String) {
-      this.avaliacao.fotos.push(image.base64String);
+      if (tipo === 'placa') {
+        this.avaliacao.imagemPlaca = image.base64String;
+      } else if (tipo === 'chassi') {
+        this.avaliacao.imagemChassi = image.base64String;
+      } else if (tipo === 'hodometro') {
+        this.avaliacao.imagemHodometro = image.base64String;
+      } else if (tipo === 'motor') {
+        this.avaliacao.imagemMotor = image.base64String;
+      }
       this.showToast('Foto selecionada com sucesso!');
     } else {
       this.showToast('Erro ao selecionar a foto.');
@@ -83,25 +103,32 @@ export class GerarAvaliacaoComponent {
     }
   }
 
+  adicionarFoto() {
+    if (this.avaliacao.fotos.length < 5) {
+      this.avaliacao.fotos.push('');
+      this.showToast('Espaço adicionado para nova foto.');
+    } else {
+      this.showToast('Você já atingiu o número máximo de fotos.');
+    }
+  }
+
   salvarAvaliacao() {
-    if (!this.avaliacao.placa || !this.avaliacao.chassi || !this.avaliacao.marcaModelo || !this.avaliacao.hodometro || !this.avaliacao.motor || this.avaliacao.fotos.length === 0) {
-      this.showToast('Todos os campos e pelo menos uma foto são obrigatórios!');
+    if (!this.avaliacao.placa || !this.avaliacao.chassi || !this.avaliacao.marcaModelo || !this.avaliacao.hodometro || !this.avaliacao.motor) {
+      this.showToast('Todos os campos e imagens são obrigatórios!');
       return;
     }
 
     this.avaliacao.dataRegistro = new Date();
-    
+
     if (this.isEditMode && this.avaliacaoIndex !== null) {
-      // Editando a avaliação
       this.avaliacaoService.editarAvaliacao(this.avaliacaoIndex, this.avaliacao);
       this.showToast('Avaliação editada com sucesso!');
     } else {
-      // Adicionando nova avaliação
       this.avaliacaoService.adicionarAvaliacao(this.avaliacao);
       this.showToast('Avaliação salva com sucesso!');
     }
 
-    this.resetarFormulario(); // Resetando o formulário após salvar
+    this.resetarFormulario();
   }
 
   private resetarFormulario() {
@@ -114,8 +141,12 @@ export class GerarAvaliacaoComponent {
       fotos: [],
       video: '',
       dataRegistro: new Date(),
+      imagemPlaca: '',
+      imagemChassi: '',
+      imagemHodometro: '',
+      imagemMotor: '',
     };
-    this.avaliacaoIndex = null; // Resetando o índice
+    this.avaliacaoIndex = null;
   }
 
   private async showToast(message: string) {
