@@ -15,8 +15,8 @@ export class HistoricoAvaliacaoComponent {
     this.carregarAvaliacoes();
   }
 
-  carregarAvaliacoes() {
-    this.avaliacoes = this.avaliacaoService.listarAvaliacoes();
+  async carregarAvaliacoes() {
+    this.avaliacoes = await this.avaliacaoService.listarAvaliacoes();
   }
 
   visualizarAvaliacao(avaliacao: Avaliacao, index: number) {

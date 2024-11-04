@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GerarAvaliacaoComponent } from './gerar-avaliacao/gerar-avaliacao.component';
 import { HistoricoAvaliacaoComponent } from './historico-avaliacao/historico-avaliacao.component';
 import { AvaliacaoDetalheComponent } from './avaliacao-detalhe/avaliacao-detalhe.component';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AvaliacaoDetalheComponent } from './avaliacao-detalhe/avaliacao-detalhe
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     FormsModule
   ],

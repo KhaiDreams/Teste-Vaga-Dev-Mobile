@@ -34,17 +34,17 @@ export class GerarAvaliacaoComponent {
     private toastController: ToastController,
     private route: ActivatedRoute
   ) {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(async (params) => {
       if (params && params['index']) {
         this.isEditMode = true;
         this.avaliacaoIndex = Number(params['index']);
-        const avaliacao = this.avaliacaoService.obterAvaliacao(this.avaliacaoIndex);
+        const avaliacao = await this.avaliacaoService.obterAvaliacao(this.avaliacaoIndex);
         if (avaliacao) {
           this.avaliacao = { ...avaliacao };
         }
       }
     });
-  }
+  }  
 
   async tirarFoto(tipo: string) {
     const image = await Camera.getPhoto({

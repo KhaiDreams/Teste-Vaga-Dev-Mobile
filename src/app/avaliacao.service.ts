@@ -1,30 +1,46 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 import { Avaliacao } from './avaliacao.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AvaliacaoService {
-  private avaliacoes: Avaliacao[] = [];
+  private storageInitialized = false;
 
-  constructor() {}
-
-  adicionarAvaliacao(avaliacao: Avaliacao) {
-    this.avaliacoes.push(avaliacao);
+  constructor(private storage: Storage) {
+    this.init();
   }
 
-  listarAvaliacoes(): Avaliacao[] {
-    return this.avaliacoes;
+  async init() {
+    await this.storage.create();
+    this.storageInitialized = true;
   }
 
-  obterAvaliacao(index: number): Avaliacao | undefined {
-    return this.avaliacoes[index];
+  async adicionarAvaliacao(avaliacao: Avaliacao) {
+    const avaliacoes = await this.obterAvaliacoes();
+    avaliacoes.push(avaliacao);
+    await this.storage.set('avaliacoes', avaliacoes);
   }
 
-  editarAvaliacao(index: number, avaliacao: Avaliacao) {
-    const existingAvaliacao = this.avaliacoes[index];
-    if (existingAvaliacao) {
-      this.avaliacoes[index] = { ...existingAvaliacao, ...avaliacao };
+  async listarAvaliacoes(): Promise<Avaliacao[]> {
+    return this.obterAvaliacoes();
+  }
+
+  async obterAvaliacao(index: number): Promise<Avaliacao | undefined> {
+    const avaliacoes = await this.obterAvaliacoes();
+    return avaliacoes[index];
+  }
+
+  async editarAvaliacao(index: number, avaliacao: Avaliacao) {
+    const avaliacoes = await this.obterAvaliacoes();
+    if (avaliacoes[index]) {
+      avaliacoes[index] = { ...avaliacoes[index], ...avaliacao };
+      await this.storage.set('avaliacoes', avaliacoes);
     }
-  }  
+  }
+
+  private async obterAvaliacoes(): Promise<Avaliacao[]> {
+    return (await this.storage.get('avaliacoes')) || [];
+  }
 }
