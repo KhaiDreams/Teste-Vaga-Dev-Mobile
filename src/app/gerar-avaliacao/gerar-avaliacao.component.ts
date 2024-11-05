@@ -44,7 +44,7 @@ export class GerarAvaliacaoComponent {
         }
       }
     });
-  }  
+  }
 
   async tirarFoto(tipo: string) {
     const image = await Camera.getPhoto({
@@ -96,8 +96,18 @@ export class GerarAvaliacaoComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.avaliacao.video = URL.createObjectURL(file);
-      this.showToast('Vídeo selecionado com sucesso!');
+      const reader = new FileReader();
+      
+      reader.onload = () => {
+        this.avaliacao.video = reader.result as string;
+        this.showToast('Vídeo selecionado com sucesso!');
+      };
+      
+      reader.onerror = () => {
+        this.showToast('Erro ao ler o vídeo.');
+      };
+  
+      reader.readAsDataURL(file);
     } else {
       this.showToast('Erro ao selecionar o vídeo.');
     }

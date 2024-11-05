@@ -66,11 +66,15 @@
 
     <ion-item>
       <ion-label>Vídeo</ion-label>
-      <input type="file" accept="video/*" (change)="escolherVideo($event)" />
+      <ion-button (click)="videoInput.click()">Escolher Vídeo</ion-button>
+      <input type="file" #videoInput accept="video/*" (change)="escolherVideo($event)" hidden />
     </ion-item>
     <ion-item *ngIf="avaliacao.video">
-      <video [src]="avaliacao.video" controls style="max-width: 100%; height: auto;"></video>
-    </ion-item>
+      <video controls style="max-width: 100%; height: auto;">
+        <source [src]="avaliacao.video" type="video/mp4" />
+        Seu navegador não suporta o elemento de vídeo.
+      </video>
+    </ion-item>    
 
     <ion-button expand="full" type="submit">Salvar Avaliação</ion-button>
   </form>
